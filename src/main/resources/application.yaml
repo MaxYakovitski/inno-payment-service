@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: inno-payment-service
+
+  mongodb:
+    uri: ${MONGODB_URI:mongodb://localhost:27017/payment_service}
