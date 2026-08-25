@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PaymentGuard {
 
-    private final PaymentRepository paymentRepository;
+  private final PaymentRepository paymentRepository;
 
-    public boolean isOwner(String id, String userId) {
-        return paymentRepository.findById(id).
-                map(payment -> payment.getUserId().toString().equals(userId))
-                .orElse(false);
-    }
+  public boolean isOwner(String id, String userId) {
+    return paymentRepository
+        .findById(id)
+        .map(payment -> payment.getUserId().toString().equals(userId))
+        .orElse(false);
+  }
 }

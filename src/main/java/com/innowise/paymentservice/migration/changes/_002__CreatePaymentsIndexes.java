@@ -38,7 +38,8 @@ public class _002__CreatePaymentsIndexes {
             .name("uq_order_id_active")
             .unique(true)
             .partialFilterExpression(
-                new Document(STATUS, new Document("$in", List.of("PENDING", "SUCCESS")))));
+                new Document(
+                    STATUS, new Document("$in", List.of("PENDING", "PROCESSING", "SUCCESS")))));
   }
 
   @Rollback

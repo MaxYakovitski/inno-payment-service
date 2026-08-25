@@ -4,7 +4,10 @@ spring:
 
   security:
     jwt:
-      jwk-set-uri: ${AUTH_SERVICE_JWK_SET_URI:http://localhost:8082/.well-known/jwks.json}
+      jwk-set-uri: ${AUTH_SERVICE_JWK_SET_URI:http://localhost:8080/.well-known/jwks.json}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
   mongodb:
     uri: ${MONGODB_URI:mongodb://localhost:27017}
@@ -16,3 +19,10 @@ random-org:
   base-url: ${RANDOM_ORG_BASE_URL:https://www.random.org}
   timeout-ms: ${RANDOM_ORG_TIMEOUT_MS:5000}
   integers-path: ${RANDOM_ORG_INTEGERS_PATH:/integers?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new}
+
+payment:
+  kafka:
+    topic: ${PAYMENT_EVENTS_TOPIC:payment-events}
+
+server:
+  port: ${SERVER_PORT:8084}

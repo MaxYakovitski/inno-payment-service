@@ -37,7 +37,7 @@ public class _001__CreatePaymentsCollection {
                     .append(
                         "status",
                         new Document(BSON_TYPE, "string")
-                            .append("enum", List.of("PENDING", "SUCCESS", "FAILED")))
+                            .append("enum", List.of("PENDING", "PROCESSING", "SUCCESS", "FAILED")))
                     .append("timestamp", new Document(BSON_TYPE, "date"))
                     .append("payment_amount", new Document(BSON_TYPE, "decimal")));
 

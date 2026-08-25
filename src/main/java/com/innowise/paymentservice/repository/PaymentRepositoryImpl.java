@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -57,8 +59,17 @@ public class PaymentRepositoryImpl implements PaymentRepositoryCustom {
 
   @Override
   public Optional<BigDecimal> sumForAllUsers(Instant from, Instant to) {
-
     return sum(Criteria.where(STATUS).is(PaymentStatus.SUCCESS).and("timestamp").gte(from).lte(to));
+  }
+
+  @Override
+  public Optional<Payment> claimNextPending() {
+    Query query = new Query(Criteria.where(STATUS).is(PaymentStatus.PENDING));
+    Update update = new Update().set(STATUS, PaymentStatus.PROCESSING);
+    Payment claimed =
+        mongoOperations.findAndModify(
+            query, update, FindAndModifyOptions.options().returnNew(true), Payment.class);
+    return Optional.ofNullable(claimed);
   }
 
   private Optional<BigDecimal> sum(Criteria matchCriteria) {

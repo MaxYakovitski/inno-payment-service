@@ -15,4 +15,6 @@ public interface PaymentRepositoryCustom {
   Optional<BigDecimal> sumForUser(UUID userId, Instant from, Instant to);
 
   Optional<BigDecimal> sumForAllUsers(Instant from, Instant to);
+
+  Optional<Payment> claimNextPending();
 }

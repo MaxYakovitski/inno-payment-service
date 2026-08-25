@@ -22,7 +22,7 @@ public class PaymentGatewayClientImpl implements PaymentGatewayClient {
     if (response == null) {
       throw new IllegalStateException("random.org returned empty response body");
     }
-    var number = Integer.parseInt(response);
+    var number = Integer.parseInt(response.trim());
     return number % 2 == 0 ? PaymentStatus.SUCCESS : PaymentStatus.FAILED;
   }
 }

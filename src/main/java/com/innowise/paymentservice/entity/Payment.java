@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
-@Document(collation = "payments")
+@Document(collection = "payments")
 @Getter
 @Setter
 @Builder

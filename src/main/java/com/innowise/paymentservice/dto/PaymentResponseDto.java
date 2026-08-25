@@ -10,6 +10,6 @@ public record PaymentResponseDto(
     String id,
     @JsonProperty("order_id") UUID orderId,
     @JsonProperty("user_id") UUID userId,
-    PaymentStatus paymentStatus,
+    PaymentStatus status,
     Instant timestamp,
     @JsonProperty("payment_amount") BigDecimal paymentAmount) {}
