@@ -2,6 +2,10 @@ spring:
   application:
     name: inno-payment-service
 
+  security:
+    jwt:
+      jwk-set-uri: ${AUTH_SERVICE_JWK_SET_URI:http://localhost:8082/.well-known/jwks.json}
+
   mongodb:
     uri: ${MONGODB_URI:mongodb://localhost:27017}
     database: ${MONGODB_DATABASE:payment_service}

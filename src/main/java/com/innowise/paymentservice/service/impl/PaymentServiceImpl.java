@@ -24,8 +24,8 @@ public class PaymentServiceImpl implements PaymentService {
   private final PaymentMapper paymentMapper;
 
   @Override
-  public PaymentResponseDto create(PaymentCreateDto request, UUID userId) {
-    Payment payment = paymentMapper.toEntity(request, userId);
+  public PaymentResponseDto create(PaymentCreateDto dto, UUID userId) {
+    Payment payment = paymentMapper.toEntity(dto, userId);
     payment.setTimestamp(Instant.now());
     Payment saved = paymentRepository.save(payment);
     return paymentMapper.toDto(saved);
