@@ -24,7 +24,7 @@ public class PaymentQueryController {
   private final PaymentService paymentService;
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN' or @paymentGuard.isOwner(#id, authentication.name))")
+  @PreAuthorize("hasRole('ADMIN') or @paymentGuard.isOwner(#id, authentication.name)")
   public ResponseEntity<PaymentResponseDto> getById(@PathVariable String id) {
     return ResponseEntity.ok(paymentService.getById(id));
   }
@@ -43,7 +43,7 @@ public class PaymentQueryController {
   }
 
   @GetMapping("/users/{user_id}/summary")
-  @PreAuthorize("hasRole('ADMIN') or #userId == authentication.name")
+  @PreAuthorize("hasRole('ADMIN') or #userId.toString() == authentication.name")
   public ResponseEntity<PaymentSumResponse> getUserSum(
       @PathVariable("user_id") UUID userId, @RequestParam Instant from, @RequestParam Instant to) {
     BigDecimal total = paymentService.sumForUser(userId, from, to).orElse(BigDecimal.ZERO);
