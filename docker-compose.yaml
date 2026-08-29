@@ -1,0 +1,44 @@
+services:
+  payment-service:
+    build: .
+    image: inno-payment-service
+    container_name: payment-service-app
+    ports:
+      - "${APP_PORT}:8080"
+    environment:
+      SERVER_PORT: 8080
+      MONGODB_URI: mongodb://payment-mongo:27017
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+      AUTH_SERVICE_JWK_SET_URI: http://auth-service:8080/.well-known/jwks.json
+      KAFKA_BOOTSTRAP_SERVERS: payment-kafka:9092
+      PAYMENT_EVENTS_TOPIC: payment-events
+    depends_on:
+      payment-mongo:
+        condition: service_healthy
+    networks:
+      - inno-net
+      - payment-internal
+
+  payment-mongo:
+    image: mongo:8
+    container_name: payment-service-mongo
+    ports:
+      - "${MONGO_HOST_PORT}:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - payment-internal
+
+volumes:
+  mongo_data:
+
+networks:
+  inno-net:
+    external: true
+  payment-internal:
+    driver: bridge
