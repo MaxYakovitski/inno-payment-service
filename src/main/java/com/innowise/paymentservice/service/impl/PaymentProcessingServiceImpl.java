@@ -22,7 +22,7 @@ public class PaymentProcessingServiceImpl implements PaymentProcessingService {
   private final PaymentEventPublisher eventPublisher;
 
   @Override
-  @Scheduled(fixedRate = 3000)
+  @Scheduled(fixedRateString = "${payment.processing.interval-ms:3000}")
   public void processPendingPayments() {
     Optional<Payment> claimed = paymentRepository.claimNextPending();
     claimed.ifPresent(this::processOne);

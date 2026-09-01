@@ -8,6 +8,11 @@ spring:
 
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      properties:
+        spring.json.add.type.headers: false
 
   mongodb:
     uri: ${MONGODB_URI:mongodb://localhost:27017}
@@ -15,14 +20,21 @@ spring:
     representation:
       uuid: standard
 
+  http:
+    clients:
+      connect-timeout: 3s
+      read-timeout: 5s
+
+
 random-org:
   base-url: ${RANDOM_ORG_BASE_URL:https://www.random.org}
-  timeout-ms: ${RANDOM_ORG_TIMEOUT_MS:5000}
   integers-path: ${RANDOM_ORG_INTEGERS_PATH:/integers?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new}
 
 payment:
   kafka:
     topic: ${PAYMENT_EVENTS_TOPIC:payment-events}
+  processing:
+    interval-ms: ${PAYMENT_PROCESSING_INTERVAL_MS:3000}
 
 server:
   port: ${SERVER_PORT:8084}
