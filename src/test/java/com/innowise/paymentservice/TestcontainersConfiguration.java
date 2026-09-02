@@ -8,18 +8,17 @@ import org.testcontainers.mongodb.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+public class TestcontainersConfiguration {
 
-    @Bean
-    @ServiceConnection
-    KafkaContainer kafkaContainer() {
-        return new KafkaContainer(DockerImageName.parse("apache/kafka-native:latest"));
-    }
+  @Bean
+  @ServiceConnection
+  KafkaContainer kafkaContainer() {
+    return new KafkaContainer(DockerImageName.parse("apache/kafka:4.0.0"));
+  }
 
-    @Bean
-    @ServiceConnection
-    MongoDBContainer mongoDbContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo:latest"));
-    }
-
+  @Bean
+  @ServiceConnection
+  MongoDBContainer mongoDbContainer() {
+    return new MongoDBContainer(DockerImageName.parse("mongo:8"));
+  }
 }
